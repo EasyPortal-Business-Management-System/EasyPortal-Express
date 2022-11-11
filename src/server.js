@@ -38,19 +38,38 @@ app.use(cors(corsOptions));
 
 require('dotenv').config(); //it loads up the env file and ready to go, without storing it into a variable. 
 
-// console.log("Firebase project ID is: " + process.env.FIREBASE_ADMIN_PROJECT_ID)
+console.log("Firebase project ID is: " + process.env.FIREBASE_ADMIN_PROJECT_ID)
+// console.log("Process is: ", process.env)
 
+//initilize firebase
+const firebaseAdmin = require('firebase-admin');
+firebaseAdmin.initializeApp({
+    credential: firebaseAdmin.credential.cert({// we need build a certificate and using a custom data, not locked in to firebase. ie. deployment database, we need to build our own certificate. 
+        "projectId": process.env.FIREBASE_ADMIN_PROJECT_ID,
+        "privateKey": process.env.FIREBASE_ADMIN_PRIVATE_KEY.replace(/\\n/g, '\n'),
+        "clientEmail": process.env.FIREBASE_ADMIN_CLIENT_EMAIL
+    })  
+
+});
+
+// ====================================================================================================
+// Config above
+// Routes Below
 
 // Actual server behaviour
 app.get('/', (req, res) => { // example of req: authorisation, form data. Res is what the server send back to the front end.
     console.log('ExpressJS API homepage received a request.');
   
-    const target = process.env.NODE_ENV || 'not yet set';
+    const target = process.env.NODE_ENV || 'not yet set'; // NODE_ENV is from when you start nodemon in development environment
     res.json({
         'message':`Hello ${target} world, wohoooo!`
     });
 
-});
+}); // because there is no res.send in the router so we're not sending anything yet to the front end
+
+
+const importedUserRouting = require('./Users/UserRoutes');
+app.use('/users', importedUserRouting)
 
 module.exports = {
     app, PORT, HOST
