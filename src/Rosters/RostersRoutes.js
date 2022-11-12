@@ -26,7 +26,7 @@ routes.get('/', async (request, response) => {
 // Set up route params with the colon before the name.
 routes.get('/:employeeID/', async (request, response) => {
     
-    let singeBlogPost = await getSpecificEmployee(request.params.blogID);
+    let singeBlogPost = await getSpecificEmployee(request.params.employeeID);
     response.json(singeBlogPost);
 
     // // Nested params just get pushed up to request.params! :D 
@@ -53,13 +53,13 @@ routes.post('/', async (request, response) => {
     // });
 });
 
-routes.delete('/:employeeID', async (request, response) => {
+routes.delete('/:postID', async (request, response) => {
     let deleteResult = await deleteSpecificEmployee(request.params.postID);
     response.json(deleteResult);
 
 });
 
-routes.put('/:employeeID', async (request, response) => {
+routes.put('/:postID', async (request, response) => {
     let updateResult = await updateSpecificEmployee({
         postID: request.params.postID,
         name: request.body.name,
