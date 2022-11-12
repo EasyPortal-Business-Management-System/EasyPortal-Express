@@ -4,7 +4,7 @@ const express = require('express'); // express provides framework to the router.
 const routes = express.Router();
 
 
-// const { getAllPosts, getSpecificPost, createSpecificPost, updateSpecificPost, deleteSpecificPost } = require('./RostersFunctions')
+const { getAllEmployees, getSpecificEmployee, createSpecificEmployee, updateSpecificEmployee, deleteSpecificEmployee } = require('./RostersFunctions')
 
 
 // This is the "root" route for the Router instance. 
