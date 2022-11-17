@@ -11,13 +11,13 @@ routes.post('/sign-up', async (request, response) => {
     let newUserDetails = {
         email: request.body.email,
         password: request.body.password,
-        displayName: request.body.username
+        displayName: request.body.displayName
     }
     // Ideally perform validation on those properties before moving on.
     // Not in the scope of this guide though! ;) 
 
     // Hand data to a sign-up function
-    let signUpResult = await signUpUser({email:newUserDetails.email, password:newUserDetails.password});
+    let signUpResult = await signUpUser({displayName: newUserDetails.displayName, email:newUserDetails.email, password:newUserDetails.password});
     // Return error or token as response
     if (signUpResult.error != null){
         console.log("Stopping the signup process due to an error. See logs for details.");
@@ -26,7 +26,7 @@ routes.post('/sign-up', async (request, response) => {
     }
 
     // Sign in to get latest user claims (authorization).
-    let signInResult = await signInUser({email:newUserDetails.email, password:newUserDetails.password});
+    let signInResult = await signInUser({displayName: newUserDetails.displayName, email:newUserDetails.email, password:newUserDetails.password});
     
     // If an error message exists, return that.
     if (signInResult.error != null){
@@ -45,13 +45,13 @@ routes.post('/sign-in', async (request, response) => {
     let userDetails = {
         email: request.body.email,
         password: request.body.password,
-        displayName: request.body.username
+        displayName: request.body.displayName
     }
     // Ideally perform validation on those properties before moving on.
     // Not in the scope of this guide though! ;) 
 
     // Hand data to a sign-in function
-    let signInResult = await signInUser({email:userDetails.email, password:userDetails.password});
+    let signInResult = await signInUser({displayName:userDetails.displayName, email:userDetails.email, password:userDetails.password});
     
     // If an error message exists, return that.
     if (signInResult.error != null){
@@ -73,7 +73,7 @@ routes.post('/validate-session', async (request, response) => {
     }
 
     // Hand data to a validation function
-    let validationResult = await validateUserSession({refreshToken: sessionDetails.refreshToken, idToken:sessionDetails.idToken})
+    let validationResult = await validateUserSession({displayName: sessionDetails.displayName, refreshToken: sessionDetails.refreshToken, idToken:sessionDetails.idToken})
     
     // Return error or token as response
     response.json(validationResult);

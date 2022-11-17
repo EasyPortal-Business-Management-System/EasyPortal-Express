@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-// Schema to structure the data
+// Schema to structure the data, not for authentication but for rosters
 const PostSchema = new mongoose.Schema({
     name: String,
     rosters: String,
