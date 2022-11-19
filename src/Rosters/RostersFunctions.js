@@ -1,10 +1,17 @@
 const {Post} = require('../database/schemas/PostsSchema');
+const firebaseAdmin = require('firebase-admin');
+
+const {signUpUser, signInUser, validateUserSession, deleteClient, listAllClient} = require ('../Users/UserFunctions');
 
 // Model.find() with no conditions inside "find()" will return all documents of that Model
 async function getAllEmployees(){
     let allEmployees = await Post.find();
-    return JSON.stringify(allEmployees);
+    let seeAllResult = await listAllClient();
+    
+    return {allEmployees: allEmployees, seeAllResult: seeAllResult}
 }
+
+
 
 // The ".exec()" helps the query just run instead of saving it for re-use.
 async function getSpecificEmployee(postID){
@@ -15,7 +22,7 @@ async function getSpecificEmployee(postID){
 // New Post instance needs to be specifically saved for it to be stored in the database.
 async function createSpecificEmployee(postDetails){
     let newPost = new Post({
-        name: postDetails.name,
+        displayName: postDetails.displayName,
         rosters: postDetails.rosters,
         employeeID: postDetails.employeeID
     })
@@ -32,7 +39,7 @@ async function updateSpecificEmployee(postDetails){
         let updateResult = await Post.findByIdAndUpdate(
             {_id: postDetails.postID},
             {
-                name: postDetails.name,
+                displayName: postDetails.displayName,
                 rosters: postDetails.rosters,
                 employeeID: postDetails.employeeID
             },

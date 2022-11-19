@@ -2,7 +2,7 @@ const express = require('express');
 
 const routes = express.Router();
 
-const {signUpUser, signInUser, validateUserSession} = require ('./UserFunctions');
+const {signUpUser, signInUser, validateUserSession, deleteClient, listAllClient} = require ('./UserFunctions');
 
 
 // Create a user, a session token & a refresh token
@@ -51,7 +51,7 @@ routes.post('/sign-in', async (request, response) => {
     // Not in the scope of this guide though! ;) 
 
     // Hand data to a sign-in function
-    let signInResult = await signInUser({displayName:userDetails.displayName, email:userDetails.email, password:userDetails.password});
+    let signInResult = await signInUser({displayName: userDetails.displayName, email:userDetails.email, password:userDetails.password});
     
     // If an error message exists, return that.
     if (signInResult.error != null){
@@ -77,6 +77,31 @@ routes.post('/validate-session', async (request, response) => {
     
     // Return error or token as response
     response.json(validationResult);
+});
+
+//List all Users /users/
+
+routes.get('/', async (request, response) => {
+    let seeAllResult = await listAllClient();
+    //  response.json({
+    //    "message": `Received a request on ${request.originalUrl}`
+    // })
+    return response.json(seeAllResult);   
+});
+
+
+// delete user
+routes.delete('/delete/:uid', async (request, response) => {
+    // Process posted form/json data
+    // let userDetails = {
+    //     uid: request.body.uid
+    // }
+
+    // Hand data to a validation function
+    let deletionResult = await deleteClient(request.params.uid)
+    
+    // Return error or token as response
+    response.json(deletionResult);
 });
 
 module.exports = routes;

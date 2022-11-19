@@ -39,7 +39,7 @@ routes.get('/:employeeID/', async (request, response) => {
 routes.post('/', async (request, response) => {
 
     let creationResult = await createSpecificEmployee({
-        name: request.body.name,
+        displayName: request.body.displayName,
         rosters: request.body.rosters,
         employeeID: request.body.employeeID
     })
@@ -62,7 +62,7 @@ routes.delete('/:postID', async (request, response) => {
 routes.put('/:postID', async (request, response) => {
     let updateResult = await updateSpecificEmployee({
         postID: request.params.postID,
-        name: request.body.name,
+        displayName: request.body.displayName,
         rosters: request.body.rosters,
         employeeID: request.body.employeeID
     });

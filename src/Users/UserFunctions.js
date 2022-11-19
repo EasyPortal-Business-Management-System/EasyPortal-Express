@@ -5,7 +5,7 @@ const firebaseAdmin = require('firebase-admin');
 const {firebaseConfig} = require('../../keys/firebaseClientKey');
 const firebaseClient = require("firebase/app");
 // Add the Firebase products that you want to use
-const {getAuth, signInWithEmailAndPassword} = require ("firebase/auth");
+const {getAuth, signInWithEmailAndPassword, deleteUser} = require ("firebase/auth");
 const { request } = require('express');
 // Initialize the Firebase Client SDK
 firebaseClient.initializeApp(firebaseConfig);
@@ -32,8 +32,6 @@ async function signUpUser(userDetails){
                 // Set "Custom Claims" on the new user
                 let adminClaims = firebaseAdmin.auth().setCustomUserClaims(userRecord.uid, {adminUser: true}).then(() => {
                 console.log("You are an admin user");
-                
-              
             });
         } else {
             let defaultUserClaims = firebaseAdmin.auth().setCustomUserClaims(userRecord.uid, {regularUser: true}).then(() => {
@@ -104,7 +102,40 @@ async function validateUserSession(sessionDetails){
     });
 }
 
+async function deleteClient(uid){
+    let deleteClientResult = firebaseAdmin.auth().deleteUser(uid)
+    .then (() => {
+        console.log("deletionResult is: ", deleteClientResult)
+        console.log(`The user ${uid} has been deleted`)
+    })
+    .catch((error) => {
+        console.log ("Delete did not work: ", error)
+        return {error: error}
+    })
+    
+    return deleteClientResult;
+}
+
+// List all users
+
+
+async function listAllClient(){
+    
+    // List batch of users, 1000 at a time.
+    return firebaseAdmin.auth().listUsers()
+        .then((listUsersResult) => {
+            // return listUsersResult
+            return listUsersResult.users.map ( x => {
+                return {displayName: x.displayName || null, uid: x.uid}
+            })
+      
+        })
+        .catch((error) => {
+        console.log('Error listing users:', error);
+        })
+}
+
 
 module.exports = {
-    signUpUser, signInUser, validateUserSession
+    signUpUser, signInUser, validateUserSession, deleteClient, listAllClient
 }
