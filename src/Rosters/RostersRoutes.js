@@ -41,7 +41,7 @@ routes.post('/', async (request, response) => {
     let creationResult = await createSpecificEmployee({
         displayName: request.body.displayName,
         rosters: request.body.rosters,
-        employeeID: request.body.employeeID
+        employeeID: request.body.uid
     })
     response.json(creationResult);
 

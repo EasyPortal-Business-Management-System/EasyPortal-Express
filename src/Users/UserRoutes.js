@@ -104,8 +104,8 @@ routes.delete('/delete/:uid', async (request, response) => {
     response.json(deletionResult);
 });
 
-routes.post('/sign-out/:uid', async (request, response) => {
-    let logoutResult = await logOut(request.params.uid)
+routes.post('/sign-out/', async (request, response) => {
+    let logoutResult = await logOut()
     response.json(logoutResult)
 })
 

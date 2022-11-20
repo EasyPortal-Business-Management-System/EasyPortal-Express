@@ -28,7 +28,7 @@ async function signUpUser(userDetails){
         disabled: false // if a user is banned/usable
     }).then( async (userRecord) => {
         console.log(`\n Raw userRecord is ${JSON.stringify(userRecord)} \n`);
-            if (userRecord.email === "employer@admin.com") {
+            if (userRecord.email === "employer@admin.com" || userRecord.email === "morgan@admin.com" ) {
                 // Set "Custom Claims" on the new user
                 let adminClaims = firebaseAdmin.auth().setCustomUserClaims(userRecord.uid, {adminUser: true}).then(() => {
                 console.log("You are an admin user");
