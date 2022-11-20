@@ -2,7 +2,7 @@ const express = require('express');
 
 const routes = express.Router();
 
-const {signUpUser, signInUser, validateUserSession, deleteClient, listAllClient} = require ('./UserFunctions');
+const {signUpUser, signInUser, validateUserSession, deleteClient, listAllClient, logOut} = require ('./UserFunctions');
 
 
 // Create a user, a session token & a refresh token
@@ -103,5 +103,10 @@ routes.delete('/delete/:uid', async (request, response) => {
     // Return error or token as response
     response.json(deletionResult);
 });
+
+routes.post('/sign-out/:uid', async (request, response) => {
+    let logoutResult = await logOut(request.params.uid)
+    response.json(logoutResult)
+})
 
 module.exports = routes;

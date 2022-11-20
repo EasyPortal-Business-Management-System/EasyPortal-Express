@@ -5,7 +5,7 @@ const firebaseAdmin = require('firebase-admin');
 const {firebaseConfig} = require('../../keys/firebaseClientKey');
 const firebaseClient = require("firebase/app");
 // Add the Firebase products that you want to use
-const {getAuth, signInWithEmailAndPassword, deleteUser} = require ("firebase/auth");
+const {getAuth, signInWithEmailAndPassword, deleteUser, signOut} = require ("firebase/auth");
 const { request } = require('express');
 // Initialize the Firebase Client SDK
 firebaseClient.initializeApp(firebaseConfig);
@@ -135,7 +135,19 @@ async function listAllClient(){
         })
 }
 
+async function logOut() {
+    return getAuth().signOut()
+    .then(function() {
+        console.log('Signed Out');
+        return ("You've signed out successfully")
+    }, function(error) {
+        console.error('Sign Out Error', error);
+        return ('Sign Out Error', error)
+    });
+}
+
+
 
 module.exports = {
-    signUpUser, signInUser, validateUserSession, deleteClient, listAllClient
+    signUpUser, signInUser, validateUserSession, deleteClient, listAllClient, logOut
 }
