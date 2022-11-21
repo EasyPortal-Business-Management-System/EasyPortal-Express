@@ -1,5 +1,5 @@
 const {Post} = require('../database/schemas/PostsSchema');
-const firebaseAdmin = require('firebase-admin');
+// const firebaseAdmin = require('firebase-admin');
 
 const {signUpUser, signInUser, validateUserSession, deleteClient, listAllClient} = require ('../Users/UserFunctions');
 
@@ -22,9 +22,16 @@ async function getSpecificEmployee(postID){
 // New Post instance needs to be specifically saved for it to be stored in the database.
 async function createSpecificEmployee(postDetails){
     let newPost = new Post({
-        displayName: postDetails.displayName,
+        name: postDetails.displayName,
         rosters: postDetails.rosters,
-        employeeID: postDetails.employeeID
+        employeeID: postDetails.employeeID,
+        Monday: postDetails.Monday,
+        Tuesday: postDetails.Tuesday,
+        Wednesday: postDetails.Wednesday,
+        Thursday: postDetails.Thursday,
+        Friday: postDetails.Friday,
+        Saturday: postDetails.Saturday,
+        Sunday: postDetails.Sunday
     })
     // extra logic can be added here on the newPost before saving. ie. validation.
     // and then save
@@ -41,7 +48,14 @@ async function updateSpecificEmployee(postDetails){
             {
                 displayName: postDetails.displayName,
                 rosters: postDetails.rosters,
-                employeeID: postDetails.employeeID
+                employeeID: postDetails.employeeID,
+                Monday: postDetails.Monday,
+                Tuesday: postDetails.Tuesday,
+                Wednesday: postDetails.Wednesday,
+                Thursday: postDetails.Thursday,
+                Friday: postDetails.Friday,
+                Saturday: postDetails.Saturday,
+                Sunday: postDetails.Sunday
             },
             { 
                 upsert: true, // upsert means it'll create document if it doesn't exist

@@ -4,6 +4,7 @@ const routes = express.Router();
 
 const {signUpUser, signInUser, validateUserSession, deleteClient, listAllClient, logOut} = require ('./UserFunctions');
 
+const {createSpecificEmployee} = require ('../rosters/rostersFunctions')
 
 // Create a user, a session token & a refresh token
 routes.post('/sign-up', async (request, response) => {
@@ -17,7 +18,7 @@ routes.post('/sign-up', async (request, response) => {
     // Not in the scope of this guide though! ;) 
 
     // Hand data to a sign-up function
-    let signUpResult = await signUpUser({displayName: newUserDetails.displayName, email:newUserDetails.email, password:newUserDetails.password});
+    let signUpResult = await signUpUser({displayName: newUserDetails.displayName, email:newUserDetails.email, password: newUserDetails.password});
     // Return error or token as response
     if (signUpResult.error != null){
         console.log("Stopping the signup process due to an error. See logs for details.");
@@ -26,12 +27,32 @@ routes.post('/sign-up', async (request, response) => {
     }
 
     // Sign in to get latest user claims (authorization).
-    let signInResult = await signInUser({displayName: newUserDetails.displayName, email:newUserDetails.email, password:newUserDetails.password});
+    let signInResult = await signInUser({displayName: newUserDetails.displayName, email:newUserDetails.email, password: newUserDetails.password});
     
     // If an error message exists, return that.
     if (signInResult.error != null){
         console.log("Stopping the signup process due to an error. See logs for details.");
         response.json(signInResult);
+        return;
+    }
+
+    let mongoDBuser = await createSpecificEmployee (
+        {
+            displayName: signInResult.displayName, 
+            employeeID: signInResult.uid, 
+            rosters: '',
+            Monday: '',
+            Tuesday: '',
+            Wednesday: '',
+            Thursday: '',
+            Friday: '',
+            Saturday: '',
+            Sunday: ''
+    })
+
+    if (mongoDBuser.error != null){
+        console.log("Stopping the signup process due to an error. See logs for details.");
+        response.json(mongoDBuser);
         return;
     }
 
@@ -104,7 +125,7 @@ routes.delete('/delete/:uid', async (request, response) => {
     response.json(deletionResult);
 });
 
-routes.post('/sign-out/', async (request, response) => {
+routes.post('/sign-out', async (request, response) => {
     let logoutResult = await logOut()
     response.json(logoutResult)
 })

@@ -41,7 +41,14 @@ routes.post('/', async (request, response) => {
     let creationResult = await createSpecificEmployee({
         displayName: request.body.displayName,
         rosters: request.body.rosters,
-        employeeID: request.body.uid
+        employeeID: request.body.uid,
+        Monday: request.body.Monday,
+        Tuesday: request.body.Tuesday,
+        Wednesday: request.body.Wednesday,
+        Thursday: request.body.Thursday,
+        Friday: request.body.Friday,
+        Saturday: request.body.Saturday,
+        Sunday: request.body.Sunday
     })
     response.json(creationResult);
 
@@ -64,7 +71,14 @@ routes.put('/:postID', async (request, response) => {
         postID: request.params.postID,
         displayName: request.body.displayName,
         rosters: request.body.rosters,
-        employeeID: request.body.employeeID
+        employeeID: request.body.employeeID,
+        Monday: request.body.Monday,
+        Tuesday: request.body.Tuesday,
+        Wednesday: request.body.Wednesday,
+        Thursday: request.body.Thursday,
+        Friday: request.body.Friday,
+        Saturday: request.body.Saturday,
+        Sunday: request.body.Sunday       
     });
 
     response.json(updateResult);

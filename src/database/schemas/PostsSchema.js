@@ -3,8 +3,16 @@ const mongoose = require('mongoose');
 // Schema to structure the data, not for authentication but for rosters
 const PostSchema = new mongoose.Schema({
     name: String,
-    rosters: String,
-    employeeID: String
+   
+    employeeID: String,
+    Monday: String,
+    Tuesday: String,
+    Wednesday: String,
+    Thursday: String,
+    Friday: String,
+    Saturday: String,
+    Sunday: String
+
 });
 
 PostSchema.methods.getAuthorName = async function getAuthorName() {
