@@ -40,7 +40,7 @@ routes.post('/', async (request, response) => {
 
     let creationResult = await createSpecificEmployee({
         displayName: request.body.displayName,
-        rosters: request.body.rosters,
+        
         employeeID: request.body.uid,
         Monday: request.body.Monday,
         Tuesday: request.body.Tuesday,
@@ -70,7 +70,7 @@ routes.put('/:postID', async (request, response) => {
     let updateResult = await updateSpecificEmployee({
         postID: request.params.postID,
         displayName: request.body.displayName,
-        rosters: request.body.rosters,
+        
         employeeID: request.body.employeeID,
         Monday: request.body.Monday,
         Tuesday: request.body.Tuesday,

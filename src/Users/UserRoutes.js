@@ -40,7 +40,7 @@ routes.post('/sign-up', async (request, response) => {
         {
             displayName: signInResult.displayName, 
             employeeID: signInResult.uid, 
-            rosters: '',
+            
             Monday: '',
             Tuesday: '',
             Wednesday: '',
