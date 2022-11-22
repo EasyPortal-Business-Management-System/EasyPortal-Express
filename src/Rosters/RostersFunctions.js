@@ -6,9 +6,9 @@ const {signUpUser, signInUser, validateUserSession, deleteClient, listAllClient}
 // Model.find() with no conditions inside "find()" will return all documents of that Model
 async function getAllEmployees(){
     let allEmployees = await Post.find();
-    let seeAllResult = await listAllClient();
+    // let seeAllResult = await listAllClient();
     
-    return {allEmployees: allEmployees, seeAllResult: seeAllResult}
+    return {allEmployees: allEmployees}
 }
 
 

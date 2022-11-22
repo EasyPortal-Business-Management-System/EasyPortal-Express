@@ -4,7 +4,7 @@ const routes = express.Router();
 
 const {signUpUser, signInUser, validateUserSession, deleteClient, listAllClient, logOut} = require ('./UserFunctions');
 
-const {createSpecificEmployee} = require ('../rosters/rostersFunctions')
+const {createSpecificEmployee} = require ('../Rosters/RostersFunctions')
 
 // Create a user, a session token & a refresh token
 routes.post('/sign-up', async (request, response) => {

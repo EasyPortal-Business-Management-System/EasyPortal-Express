@@ -28,14 +28,16 @@ async function signUpUser(userDetails){
         disabled: false // if a user is banned/usable
     }).then( async (userRecord) => {
         console.log(`\n Raw userRecord is ${JSON.stringify(userRecord)} \n`);
-            if (userRecord.email === "employer@admin.com" || userRecord.email === "morgan@admin.com" ) {
+            if (userRecord.email === "employer@admin.com" || userRecord.email === "morgan@admin.com" || userRecord.email === "tim@admin.com" || userRecord.email === "production@admin.com" ) {
                 // Set "Custom Claims" on the new user
-                let adminClaims = firebaseAdmin.auth().setCustomUserClaims(userRecord.uid, {adminUser: true}).then(() => {
+                firebaseAdmin.auth().setCustomUserClaims(userRecord.uid, {adminUser: true}).then(() => {
                 console.log("You are an admin user");
+                // return adminClaims -> do i need to do this
             });
         } else {
-            let defaultUserClaims = firebaseAdmin.auth().setCustomUserClaims(userRecord.uid, {regularUser: true}).then(() => {
+            firebaseAdmin.auth().setCustomUserClaims(userRecord.uid, {regularUser: true}).then(() => {
                 console.log("you are a regular user");
+                // return defaultUserClaims -> do i need to do this
                 
             });
         }
@@ -58,6 +60,11 @@ async function signInUser(userDetails){
         let userIdToken = await firebaseClientAuth.currentUser.getIdTokenResult(false);
 
         console.log(`userIdToken obj is\n ${JSON.stringify(userIdToken)}`);
+        if (userIdToken.claims.email === "employer@admin.com" || userIdToken.claims.email === "morgan@admin.com" || userIdToken.claims.email === "tim@admin.com" ) {
+            console.log("You are an admin/employer user");   
+        } else {
+            console.log("You are an employee user");  
+        }
 
         return {
             idToken: userIdToken.token,
@@ -107,6 +114,7 @@ async function deleteClient(uid){
     .then (() => {
         console.log("deletionResult is: ", deleteClientResult)
         console.log(`The user ${uid} has been deleted`)
+        return (`The user ${uid} has been deleted`)
     })
     .catch((error) => {
         console.log ("Delete did not work: ", error)
@@ -138,7 +146,7 @@ async function listAllClient(){
 async function logOut() {
     return getAuth().signOut()
     .then(function() {
-        console.log('Signed Out');
+        console.log("You've signed out successfully");
         return ("You've signed out successfully")
     }, function(error) {
         console.error('Sign Out Error', error);
