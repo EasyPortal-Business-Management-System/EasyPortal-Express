@@ -63,7 +63,7 @@ if (process.env.NODE_ENV != "test") {
     //what is 27017 coming from, and why when I changed it, it'll fail ? 27017 is the default mongoose url
     databaseConnector(DATABASE_URI).then(() => {
         // if database connection succeeded, log a nice success message
-        console.log("Database connected, wohoo!!")
+        console.log("You've connected to Database!!")
     }).catch(error => {
         // if database connection failed, log the error
         console.log(`
