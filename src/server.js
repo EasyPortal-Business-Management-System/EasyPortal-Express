@@ -83,7 +83,7 @@ app.get('/', (req, res) => { // example of req: authorisation, form data. Res is
   
     const target = process.env.NODE_ENV || 'not yet set'; // NODE_ENV is from when you start nodemon in development environment
     res.json({
-        'message':`Hello ${target} world, wohoooo!`
+        'message':`Hello, you're now connected to ${target} world!`
     });
 
 }); // because there is no res.send in the router so we're not sending anything yet to the front end yet
