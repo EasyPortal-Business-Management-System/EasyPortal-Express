@@ -6,7 +6,7 @@ Timotius Mogot ([Github](https://github.com/Sky12072))
 <br> Morgan Rohan ([Github](https://github.com/MorganRohan))
 
 ## Important Links
-Deployed App: 
+Project links: 
 
 Client Repository: https://github.com/EasyPortal-Business-Management-System/EasyPortal-Client 
 
@@ -15,6 +15,12 @@ Server Repository: https://github.com/EasyPortal-Business-Management-System/Easy
 Part A Documentation Repository: https://github.com/EasyPortal-Business-Management-System/Part-A-docs
 
 EasyPortal is system that focuses on providing easy to use and exciting business management functions such as setting rosters and communicating pay information.
+
+Deployed frontend and backend urls:
+
+Front-end React: https://www.easyportal-businessmanagement.com/
+
+Back-end Expressjs: https://easyportal-heroku.herokuapp.com/
 
 ## Installation Instructions
 To use the production app, please visit (link) and use in browser. If you would like to use the app locally, you can follow the instructions below.

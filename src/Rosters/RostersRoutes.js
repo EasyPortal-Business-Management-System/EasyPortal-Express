@@ -40,7 +40,6 @@ routes.post('/', async (request, response) => {
 
     let creationResult = await createSpecificEmployee({
         displayName: request.body.displayName,
-        
         employeeID: request.body.uid,
         Monday: request.body.Monday,
         Tuesday: request.body.Tuesday,
