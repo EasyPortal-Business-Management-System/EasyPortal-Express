@@ -29,7 +29,7 @@ async function signUpUser(userDetails){
     }).then( async (userRecord) => {
         console.log(`\n Raw userRecord is ${JSON.stringify(userRecord)} \n`);
         // Set "Custom Claims" on the new user
-            if (userRecord.email === "employer@admin.com" || userRecord.email === "morgan@admin.com" || userRecord.email === "tim@admin.com" || userRecord.email === "production@admin.com" ) {
+            if (userRecord.email === "production@admin.com" || userRecord.email === "production1@admin.com" || userRecord.email === "production2@admin.com" || userRecord.email === "production3@admin.com" || userRecord.email === "production4@admin.com" || userRecord.email === "production5@admin.com" ) {
                 
                 firebaseAdmin.auth().setCustomUserClaims(userRecord.uid, {adminUser: true}).then(() => {
                 console.log("You are an admin user");                
