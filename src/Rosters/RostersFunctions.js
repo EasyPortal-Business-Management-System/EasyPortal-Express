@@ -1,25 +1,21 @@
 const {Post} = require('../database/schemas/PostsSchema');
-// const firebaseAdmin = require('firebase-admin');
-
-const {signUpUser, signInUser, validateUserSession, deleteClient, listAllClient} = require ('../Users/UserFunctions');
 
 // Model.find() with no conditions inside "find()" will return all documents of that Model
 async function getAllEmployees(){
     let allEmployees = await Post.find();
-    // let seeAllResult = await listAllClient();
-    
+  
     return {allEmployees: allEmployees}
 }
 
 
 
-// The ".exec()" helps the query just run instead of saving it for re-use.
+// a function that connects to mongoose method and database to search a specific user by id
 async function getSpecificEmployee(postID){
     let specificEmployeeQuery = await Post.findById(postID).exec();
     return specificEmployeeQuery;
 }
 
-// New Post instance needs to be specifically saved for it to be stored in the database.
+// A function that creates a new user database in mongoDB. Since the method used isn't 'create', but 'new', then we need to use save method.
 async function createSpecificEmployee(postDetails){
     let newPost = new Post({
         name: postDetails.displayName,
@@ -39,7 +35,7 @@ async function createSpecificEmployee(postDetails){
     return creationResult;
 }
 
-// Theoretically, you could use this instead of "new Post({})" thanks to upsert.
+// A function to update specific mongoDB user database by its id
 async function updateSpecificEmployee(postDetails){
     try {
         let updateResult = await Post.findByIdAndUpdate(
@@ -79,7 +75,7 @@ async function updateSpecificEmployee(postDetails){
     
 }
 
-// Returns an empty object if all goes well.
+// A function that delete a user database in mongoDB using parameter from '_id'. Returns an empty object if all goes well.
 async function deleteSpecificEmployee(postID){
     let deletionResult = await Post.deleteOne({ _id: postID});
     // returns 1 if deleted 1 document

@@ -14,12 +14,7 @@ const PostSchema = new mongoose.Schema({
 
 });
 
-PostSchema.methods.getAuthorName = async function getAuthorName() {
-    /*
-    let author = AuthorSchema.findById(this.postAuthorID)
-    */
-   console.log(`Use the auth system to search for a user, something like FirebaseAuth.findUser(postAuthorID) using the data value from ${this.employeeID}`)
-}
+
 
 // Class / model Creation (Instantiation) to help make instances of that schema
 const Post = mongoose.model('Post', PostSchema);

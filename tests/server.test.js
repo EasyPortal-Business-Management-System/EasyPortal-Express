@@ -9,7 +9,7 @@ const {app} = require('../src/server');
 const {databaseConnector, databaseDisconnector} = require('../src/database');
 const DATABASE_URI = process.env.DATABASE_URI || 'mongodb://localhost:27017/SomeTestDatabase'
 
-// set up before-tests and after tests operations
+// beforeEach and afterEach will set up before-tests and after tests operations (connect and disconnect, so it won't hang around if there's no activities)
 
 beforeEach(async () => {
     await databaseConnector(DATABASE_URI);

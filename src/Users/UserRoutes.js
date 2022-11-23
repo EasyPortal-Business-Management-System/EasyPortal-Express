@@ -6,7 +6,9 @@ const {signUpUser, signInUser, validateUserSession, deleteClient, listAllClient,
 
 const {createSpecificEmployee} = require ('../Rosters/RostersFunctions')
 
-// Create a user, a session token & a refresh token
+// This route is to create a user, a session token & a refresh token
+// by signing up the user and then signing in the user. The token will be generated after
+// the user has signed in. 
 routes.post('/sign-up', async (request, response) => {
     // Process posted form/json data
     let newUserDetails = {
@@ -59,7 +61,7 @@ routes.post('/sign-up', async (request, response) => {
     response.json(signInResult);
 });
 
-// Create a session token & refresh token
+// This route is to sign in the user with credentials and then create a session token & refresh token
 routes.post('/sign-in', async (request, response) => {
     // Process posted form/json data
     let userDetails = {
@@ -84,7 +86,7 @@ routes.post('/sign-in', async (request, response) => {
     response.json(signInResult);
 });
 
-// Create a session token & refresh token
+// This route is to create a session token & refresh token only
 routes.post('/validate-session', async (request, response) => {
     // Process posted form/json data
     let sessionDetails = {
@@ -99,8 +101,7 @@ routes.post('/validate-session', async (request, response) => {
     response.json(validationResult);
 });
 
-//List all Users /users/
-
+// This route is to get and list all users using baseURL of /users
 routes.get('/', async (request, response) => {
     let seeAllResult = await listAllClient();
     //  response.json({
@@ -110,12 +111,8 @@ routes.get('/', async (request, response) => {
 });
 
 
-// delete user
+// This route is to call delete user function by taking in the value in the params. ie. uid
 routes.delete('/delete/:uid', async (request, response) => {
-    // Process posted form/json data
-    // let userDetails = {
-    //     uid: request.body.uid
-    // }
 
     // Hand data to a validation function
     let deletionResult = await deleteClient(request.params.uid)
@@ -124,6 +121,7 @@ routes.delete('/delete/:uid', async (request, response) => {
     response.json(deletionResult);
 });
 
+// This route is to call signout user function to logout the currently logged-in user.
 routes.post('/sign-out', async (request, response) => {
     let logoutResult = await logOut()
     response.json(logoutResult)

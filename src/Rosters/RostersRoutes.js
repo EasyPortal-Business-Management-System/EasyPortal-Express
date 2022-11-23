@@ -8,34 +8,26 @@ const { getAllEmployees, getSpecificEmployee, createSpecificEmployee, updateSpec
 
 
 // This is the "root" route for the Router instance. 
-// Its actual name in the URL will depend on how it's configured in src/index.js
-//localhost:55000/Bananas/blaa -> so the endpoint of routers get would after bananas/
+// Default value is /employees, which is been set up in server.js line 92 - 96.
+// The purpose
 routes.get('/', async (request, response) => {
-
     let postsResult = await getAllEmployees();
 
-    response.json(postsResult);
-
-    
-    // response.json({
-    //    "message": `Received a request on ${request.originalUrl}`
-    // })
-    
+    response.json(postsResult);    
 });
 
 // Set up route params with the colon before the name.
+// This route is to implement the get specific user database in mongoDB using params
 routes.get('/:employeeID/', async (request, response) => {
     
     let singeBlogPost = await getSpecificEmployee(request.params.employeeID);
     response.json(singeBlogPost);
 
-    // // Nested params just get pushed up to request.params! :D 
-    // console.log(request.params);
-    // response.json(`Received a GET request for a blog post with ID of ${request.params.blogID} and nested param of ${request.params.AnotherParam}`);
 
 });
 
-// Use Postman or another HTTP tool to visit a POST route.
+// This route is to create a user database in mongoDB
+// with default value of baseURL /employees
 routes.post('/', async (request, response) => {
 
     let creationResult = await createSpecificEmployee({
@@ -50,21 +42,17 @@ routes.post('/', async (request, response) => {
         Sunday: request.body.Sunday
     })
     response.json(creationResult);
-
-    // console.log(`Content author was ${request.body.postAuthorID}`);
-
-    // response.json( {
-    //     message : `Received a POST request for a blog post with ID of ${request.params.blogID}`,
-    //     bodyContent: request.body
-    // });
 });
 
+// This route is to call delete function of user database in mongoDB
 routes.delete('/:postID', async (request, response) => {
     let deleteResult = await deleteSpecificEmployee(request.params.postID);
     response.json(deleteResult);
 
 });
 
+
+// This rout is to call update function user database in mongodb
 routes.put('/:postID', async (request, response) => {
     let updateResult = await updateSpecificEmployee({
         postID: request.params.postID,

@@ -5,7 +5,7 @@ const firebaseAdmin = require('firebase-admin');
 const {firebaseConfig} = require('../../keys/firebaseClientKey');
 const firebaseClient = require("firebase/app");
 // Add the Firebase products that you want to use
-const {getAuth, signInWithEmailAndPassword, deleteUser, signOut} = require ("firebase/auth");
+const {getAuth, signInWithEmailAndPassword} = require ("firebase/auth");
 const { request } = require('express');
 // Initialize the Firebase Client SDK
 firebaseClient.initializeApp(firebaseConfig);
@@ -16,41 +16,39 @@ firebaseClient.initializeApp(firebaseConfig);
 // Functions below
 
 
-
+// This function is used to sign up the user using firebase method by passing object values
+// and then setting role based on a hardcoded email address to identify between admin and general users.
 async function signUpUser(userDetails){
     // Use the Firebase Admin SDK to create the user
     return firebaseAdmin.auth().createUser({
         email: userDetails.email, // User email address.
-        emailVerified: true, // Required for fuller user functionality, but a hassle to set up in a short tutorial. Set to false if you do end up configuring email verifications, as the email system will set it to true.
-        password: userDetails.password, // password. You'll never see this value even as project admin.
-        displayName: userDetails.displayName, // the username
-        // photoURL: "", // point to an image file hosted elsewhere
+        emailVerified: true, // Required for fuller user functionality.
+        password: userDetails.password, 
+        displayName: userDetails.displayName, // This is will be the name of the new user
         disabled: false // if a user is banned/usable
     }).then( async (userRecord) => {
         console.log(`\n Raw userRecord is ${JSON.stringify(userRecord)} \n`);
+        // Set "Custom Claims" on the new user
             if (userRecord.email === "employer@admin.com" || userRecord.email === "morgan@admin.com" || userRecord.email === "tim@admin.com" || userRecord.email === "production@admin.com" ) {
-                // Set "Custom Claims" on the new user
+                
                 firebaseAdmin.auth().setCustomUserClaims(userRecord.uid, {adminUser: true}).then(() => {
-                console.log("You are an admin user");
-                // return adminClaims -> do i need to do this
+                console.log("You are an admin user");                
             });
         } else {
             firebaseAdmin.auth().setCustomUserClaims(userRecord.uid, {regularUser: true}).then(() => {
-                console.log("you are a regular user");
-                // return defaultUserClaims -> do i need to do this
-                
+                console.log("you are a regular user");                
             });
         }
         return userRecord;
 
-        
-        
     }).catch(error => {
         console.log("Internal sign-up function error is: \n" + error);
         return {error:error};
     });
 }
 
+// This is a function that derives from firebase to sign in the user and to generate the tokens,
+// such as idToken, refresh token, etc.
 async function signInUser(userDetails){
     const firebaseClientAuth = getAuth();
 
@@ -83,6 +81,10 @@ async function signInUser(userDetails){
     return signInResult;
 }
 
+
+// This function is to validate user session meant to be used for every user interaction, but at this stage
+// we decided not to use it, and instead we use custom claims or uid for users to do certain things instead.
+// We do have plan to use it in the future that's the reason we leave it here. 
 async function validateUserSession(sessionDetails){
     let userRefreshToken = sessionDetails.refreshToken;
     let userIdToken = sessionDetails.idToken;
@@ -109,6 +111,8 @@ async function validateUserSession(sessionDetails){
     });
 }
 
+// This function is using firebase method to delete user in firebase by taking 
+// firebase uid or params as the argument value to the function's parameter. 
 async function deleteClient(uid){
     let deleteClientResult = firebaseAdmin.auth().deleteUser(uid)
     .then (() => {
@@ -124,9 +128,8 @@ async function deleteClient(uid){
     return deleteClientResult;
 }
 
-// List all users
-
-
+// This function is to list all users using firebase method that will return
+// the user name and user id(uid)
 async function listAllClient(){
     
     // List batch of users, 1000 at a time.
@@ -143,6 +146,8 @@ async function listAllClient(){
         })
 }
 
+// This function takes in method from getAuth which is also coming from firebase.
+// The purpose of this function is to log out the currently logged-in user.
 async function logOut() {
     return getAuth().signOut()
     .then(function() {
