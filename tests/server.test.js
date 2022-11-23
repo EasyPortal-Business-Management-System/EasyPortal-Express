@@ -19,9 +19,9 @@ afterEach(async () => {
     await databaseDisconnector();
 })
 
-// then we can write a tests
+// The tests
 describe('Server homepage...', () => {
-    it("shows a hello message", async () => {
+    it("shows a connection status", async () => {
         const response = await request(app).get('/');
         expect(response.statusCode).toEqual(200);
         expect(response.text).toEqual(expect.stringContaining("connected"));
