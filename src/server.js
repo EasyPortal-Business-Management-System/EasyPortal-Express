@@ -39,7 +39,7 @@ app.use(cors(corsOptions));
 require('dotenv').config(); //it loads up the env file and ready to go, without storing it into a variable. 
 
 console.log("Firebase project ID is: " + process.env.FIREBASE_ADMIN_PROJECT_ID)
-// console.log("Process is: ", process.env)
+
 
 //initilize firebase
 const firebaseAdmin = require('firebase-admin');
