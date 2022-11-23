@@ -23,7 +23,6 @@ async function getSpecificEmployee(postID){
 async function createSpecificEmployee(postDetails){
     let newPost = new Post({
         name: postDetails.displayName,
-        
         employeeID: postDetails.employeeID,
         Monday: postDetails.Monday,
         Tuesday: postDetails.Tuesday,
@@ -47,7 +46,6 @@ async function updateSpecificEmployee(postDetails){
             {_id: postDetails.postID},
             {
                 displayName: postDetails.displayName,
-                
                 employeeID: postDetails.employeeID,
                 Monday: postDetails.Monday,
                 Tuesday: postDetails.Tuesday,
