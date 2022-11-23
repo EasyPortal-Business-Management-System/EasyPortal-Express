@@ -31,7 +31,7 @@ app.use(express.urlencoded({extended:true}));
 
 // Set up CORS. It controls what requests can come through to our app, Who can contact the API. So this is for the frontend URI
 var corsOptions = {
-    origin: ["http://localhost:3000", "https://www.easyportal-businessmanagement.com/"],
+    origin: ["http://localhost:3000", "https://www.easyportal-businessmanagement.com"],
     optionsSuccessStatus: 200
 }
 app.use(cors(corsOptions));
