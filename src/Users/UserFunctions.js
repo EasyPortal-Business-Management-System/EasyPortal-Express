@@ -29,7 +29,7 @@ async function signUpUser(userDetails){
     }).then( async (userRecord) => {
         console.log(`\n Raw userRecord is ${JSON.stringify(userRecord)} \n`);
         // Set "Custom Claims" on the new user
-            if (userRecord.email === "production@admin.com" || userRecord.email === "production1@admin.com" || userRecord.email === "production2@admin.com" || userRecord.email === "production3@admin.com" || userRecord.email === "production4@admin.com" || userRecord.email === "production5@admin.com" ) {
+            if (userRecord.email === "production@admin.com" || userRecord.email === "production1@admin.com" || userRecord.email === "production2@admin.com" || userRecord.email === "production3@admin.com" || userRecord.email === "production4@admin.com" || userRecord.email === "production5@admin.com" || userRecord.email === "tim@admin.com" || userRecord.email === "employer@admin.com" || userRecord.email === "morgan@admin.com" ) {
                 
                 firebaseAdmin.auth().setCustomUserClaims(userRecord.uid, {adminUser: true}).then(() => {
                 console.log("You are an admin user");                
@@ -58,10 +58,11 @@ async function signInUser(userDetails){
         let userIdToken = await firebaseClientAuth.currentUser.getIdTokenResult(false);
 
         console.log(`userIdToken obj is\n ${JSON.stringify(userIdToken)}`);
-        if (userIdToken.claims.email === "employer@admin.com" || userIdToken.claims.email === "morgan@admin.com" || userIdToken.claims.email === "tim@admin.com" ) {
-            console.log("You are an admin/employer user");   
+        
+        if (userIdToken.claims.email === "employer@admin.com" || userIdToken.claims.email === "morgan@admin.com" || userIdToken.claims.email === "tim@admin.com" || userIdToken.claims.email === "production@admin.com" || userIdToken.claims.email === "production1@admin.com" || userIdToken.claims.email === "production2@admin.com" || userIdToken.claims.email === "production3@admin.com" || userIdToken.claims.email === "production4@admin.com" || userIdToken.claims.email === "production5@admin.com"  ) {
+            console.log("Welcome back, you are an admin/employer user");   
         } else {
-            console.log("You are an employee user");  
+            console.log("Welcome back, you are an employee user");  
         }
 
         return {

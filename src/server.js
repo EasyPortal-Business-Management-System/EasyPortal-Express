@@ -88,10 +88,11 @@ app.get('/', (req, res) => { // example of req: authorisation, form data. Res is
 
 }); // because there is no res.send in the router so we're not sending anything yet to the front end yet
 
-
+// /users are for firebase queries
 const importedUserRouting = require('./Users/UserRoutes');
 app.use('/users', importedUserRouting)
 
+// /employees are for mongoDB queries 
 const importedRosterRouting = require('./Rosters/RostersRoutes');
 app.use('/employees', importedRosterRouting);
 
