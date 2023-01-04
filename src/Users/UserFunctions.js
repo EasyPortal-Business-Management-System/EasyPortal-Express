@@ -29,14 +29,16 @@ async function signUpUser(userDetails){
     }).then( async (userRecord) => {
         console.log(`\n Raw userRecord is ${JSON.stringify(userRecord)} \n`);
         // Set "Custom Claims" on the new user
-            if (userRecord.email === "production@admin.com" || userRecord.email === "production1@admin.com" || userRecord.email === "production2@admin.com" || userRecord.email === "production3@admin.com" || userRecord.email === "production4@admin.com" || userRecord.email === "production5@admin.com" || userRecord.email === "tim@admin.com" || userRecord.email === "employer@admin.com" || userRecord.email === "morgan@admin.com" ) {
-                
-                firebaseAdmin.auth().setCustomUserClaims(userRecord.uid, {adminUser: true}).then(() => {
-                console.log("You are an admin user");                
+        if (userRecord.email === "production@admin.com" || userRecord.email === "production1@admin.com" || userRecord.email === "production2@admin.com" || userRecord.email === "production3@admin.com" || userRecord.email === "production4@admin.com" || userRecord.email === "production5@admin.com" || userRecord.email === "tim@admin.com" || userRecord.email === "employer@admin.com" || userRecord.email === "morgan@admin.com" ) {
+            
+            await firebaseAdmin.auth().setCustomUserClaims(userRecord.uid, { adminUser: true }).then(() => {
+            console.log("You are an admin user");                
+            console.log("User UID SIGN UP: ", userRecord.uid);                
             });
         } else {
-            firebaseAdmin.auth().setCustomUserClaims(userRecord.uid, {regularUser: true}).then(() => {
-                console.log("you are a regular user");                
+            await firebaseAdmin.auth().setCustomUserClaims(userRecord.uid, {regularUser: true}).then(() => {
+                console.log("you are a regular user"); 
+                console.log("User UID SIGN UP: ", userRecord.uid);                
             });
         }
         return userRecord;
@@ -51,28 +53,45 @@ async function signUpUser(userDetails){
 // such as idToken, refresh token, etc.
 async function signInUser(userDetails){
     const firebaseClientAuth = getAuth();
-
+    
     let signInResult = signInWithEmailAndPassword(firebaseClientAuth, userDetails.email, userDetails.password)
     .then(async (userCredential) => {
 
-        let userIdToken = await firebaseClientAuth.currentUser.getIdTokenResult(false);
+        let userIdToken = await firebaseClientAuth.currentUser.getIdTokenResult(true);
 
+        let user = getAuth().currentUser
+        let uid = user.uid
+        console.log('UID is: ', uid)
         console.log(`userIdToken obj is\n ${JSON.stringify(userIdToken)}`);
+        console.log('userId claims are: ', userIdToken.claims)
+
+        await firebaseAdmin.auth().getUser(uid)
+        .then((userRecord) => {
+            // The claims can be accessed on the user record.
+            console.log('Admin user asdfasdfasdf is ', userRecord.customClaims);
+        });       
         
         if (userIdToken.claims.email === "employer@admin.com" || userIdToken.claims.email === "morgan@admin.com" || userIdToken.claims.email === "tim@admin.com" || userIdToken.claims.email === "production@admin.com" || userIdToken.claims.email === "production1@admin.com" || userIdToken.claims.email === "production2@admin.com" || userIdToken.claims.email === "production3@admin.com" || userIdToken.claims.email === "production4@admin.com" || userIdToken.claims.email === "production5@admin.com"  ) {
             console.log("Welcome back, you are an admin/employer user");   
         } else {
             console.log("Welcome back, you are an employee user");  
         }
-
         return {
             idToken: userIdToken.token,
-            refreshToken: userCredential.user.refreshToken,
-            email: userCredential.user.email,
+            refreshToken: userCredential.user.refreshToken,            
             emailVerified: userCredential.user.emailVerified,
             displayName: userCredential.user.displayName,
             photoURL: userCredential.user.photoURL,
-            uid: userCredential.user.uid
+            uid: userCredential.user.uid,
+            email: userCredential.user.email,
+            claims: userIdToken.claims,
+            // adminUser: userIdToken.claims,
+            // adminUser: userIdToken.claims.adminUser,
+            
+
+            
+            
+            
         }
     }).catch(error => {
         console.log("Internal signin function error is: \n" + error);
@@ -117,7 +136,7 @@ async function validateUserSession(sessionDetails){
 async function deleteClient(uid){
     let deleteClientResult = firebaseAdmin.auth().deleteUser(uid)
     .then (() => {
-        console.log("deletionResult is: ", deleteClientResult)
+        console.log("deletionResult of FIREBASE is: ", deleteClientResult)
         console.log(`The user ${uid} has been deleted`)
         return (`The user ${uid} has been deleted`)
     })

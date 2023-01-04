@@ -39,10 +39,8 @@ async function createSpecificEmployee(postDetails){
 async function updateSpecificEmployee(postDetails){
     try {
         let updateResult = await Post.findByIdAndUpdate(
-            {_id: postDetails.postID},
+            {_id: postDetails.id},
             {
-                displayName: postDetails.displayName,
-                employeeID: postDetails.employeeID,
                 Monday: postDetails.Monday,
                 Tuesday: postDetails.Tuesday,
                 Wednesday: postDetails.Wednesday,
@@ -56,7 +54,7 @@ async function updateSpecificEmployee(postDetails){
                 new: true // return the new modified doc. if false, original is returned.
             } 
         );
-    
+        console.log("Rosters Function Post details: ", postDetails)
         return updateResult;
     }
     catch (error) {
@@ -76,11 +74,12 @@ async function updateSpecificEmployee(postDetails){
 }
 
 // A function that delete a user database in mongoDB using parameter from '_id'. Returns an empty object if all goes well.
-async function deleteSpecificEmployee(postID){
-    let deletionResult = await Post.deleteOne({ _id: postID});
+async function deleteSpecificEmployee(id){
+    let deletionResult = await Post.deleteOne({ _id: id});
     // returns 1 if deleted 1 document
     // returns 0 if deleted 0 documents
     // should never return more than 1
+    console.log("MongoDB user deletion result:", deletionResult)
     return deletionResult;
 }
 

@@ -38,6 +38,7 @@ routes.post('/sign-up', async (request, response) => {
         return;
     }
 
+    // When userFirebase signup, this will also create MongoDB user data
     let mongoDBuser = await createSpecificEmployee (
         {
             displayName: signInResult.displayName, 
@@ -56,7 +57,7 @@ routes.post('/sign-up', async (request, response) => {
         response.json(mongoDBuser);
         return;
     }
-
+    
     // On success, return a signed-in session to the brand-new user:
     response.json(signInResult);
 });
@@ -67,13 +68,13 @@ routes.post('/sign-in', async (request, response) => {
     let userDetails = {
         email: request.body.email,
         password: request.body.password,
-        displayName: request.body.displayName
+        
     }
     // Ideally perform validation on those properties before moving on.
     // Not in the scope of this guide though! ;) 
 
     // Hand data to a sign-in function
-    let signInResult = await signInUser({displayName: userDetails.displayName, email:userDetails.email, password:userDetails.password});
+    let signInResult = await signInUser({ email:userDetails.email, password:userDetails.password});
     
     // If an error message exists, return that.
     if (signInResult.error != null){
@@ -113,10 +114,10 @@ routes.get('/', async (request, response) => {
 
 // This route is to call delete user function by taking in the value in the params. ie. uid
 routes.delete('/delete/:uid', async (request, response) => {
-
+    console.log("request.params.uid is: ", request.params.uid)
     // Hand data to a validation function
     let deletionResult = await deleteClient(request.params.uid)
-    
+    console.log("USER ROUTES deletionResult is: ", deletionResult)
     // Return error or token as response
     response.json(deletionResult);
 });

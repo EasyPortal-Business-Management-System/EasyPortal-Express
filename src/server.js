@@ -88,6 +88,9 @@ app.get('/', (req, res) => { // example of req: authorisation, form data. Res is
 
 }); // because there is no res.send in the router so we're not sending anything yet to the front end yet
 
+
+// Below connects and differentiate the root url between users and rosters (Firebase and mongoDB)
+
 // /users are for firebase queries
 const importedUserRouting = require('./Users/UserRoutes');
 app.use('/users', importedUserRouting)
