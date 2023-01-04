@@ -85,8 +85,7 @@ async function signInUser(userDetails){
             uid: userCredential.user.uid,
             email: userCredential.user.email,
             claims: userIdToken.claims,
-            // adminUser: userIdToken.claims,
-            // adminUser: userIdToken.claims.adminUser,
+            
             
 
             
@@ -136,9 +135,9 @@ async function validateUserSession(sessionDetails){
 async function deleteClient(uid){
     let deleteClientResult = firebaseAdmin.auth().deleteUser(uid)
     .then (() => {
-        console.log("deletionResult of FIREBASE is: ", deleteClientResult)
+        // console.log("deletionResult of FIREBASE is: ", deleteClientResult)
         console.log(`The user ${uid} has been deleted`)
-        return (`The user ${uid} has been deleted`)
+        
     })
     .catch((error) => {
         console.log ("Delete did not work: ", error)

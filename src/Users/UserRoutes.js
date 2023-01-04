@@ -114,10 +114,13 @@ routes.get('/', async (request, response) => {
 
 // This route is to call delete user function by taking in the value in the params. ie. uid
 routes.delete('/delete/:uid', async (request, response) => {
-    console.log("request.params.uid is: ", request.params.uid)
+    // console.log("request.params.uid is: ", request.params.uid)
+
     // Hand data to a validation function
     let deletionResult = await deleteClient(request.params.uid)
-    console.log("USER ROUTES deletionResult is: ", deletionResult)
+
+    // console.log("USER ROUTES deletionResult is: ", deletionResult)
+    
     // Return error or token as response
     response.json(deletionResult);
 });
