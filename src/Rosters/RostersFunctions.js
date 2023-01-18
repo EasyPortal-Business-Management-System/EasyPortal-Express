@@ -26,7 +26,8 @@ async function createSpecificEmployee(postDetails){
         Thursday: postDetails.Thursday,
         Friday: postDetails.Friday,
         Saturday: postDetails.Saturday,
-        Sunday: postDetails.Sunday
+        Sunday: postDetails.Sunday,
+        TotalHours: postDetails.TotalHours
     })
     // extra logic can be added here on the newPost before saving. ie. validation.
     // and then save
@@ -47,7 +48,8 @@ async function updateSpecificEmployee(postDetails){
                 Thursday: postDetails.Thursday,
                 Friday: postDetails.Friday,
                 Saturday: postDetails.Saturday,
-                Sunday: postDetails.Sunday
+                Sunday: postDetails.Sunday,
+                TotalHours: postDetails.TotalHours
             },
             { 
                 upsert: true, // upsert means it'll create document if it doesn't exist

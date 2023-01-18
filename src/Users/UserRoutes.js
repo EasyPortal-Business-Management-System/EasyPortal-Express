@@ -49,7 +49,8 @@ routes.post('/sign-up', async (request, response) => {
             Thursday: '',
             Friday: '',
             Saturday: '',
-            Sunday: ''
+            Sunday: '',
+            TotalHours: ''
     })
 
     if (mongoDBuser.error != null){

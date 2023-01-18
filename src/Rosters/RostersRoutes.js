@@ -39,7 +39,9 @@ routes.post('/', async (request, response) => {
         Thursday: request.body.Thursday,
         Friday: request.body.Friday,
         Saturday: request.body.Saturday,
-        Sunday: request.body.Sunday
+        Sunday: request.body.Sunday,
+        TotalHours: request.TotalHours
+
     })
     response.json(creationResult);
 });
@@ -66,7 +68,8 @@ routes.put('/:id', async (request, response) => {
         Thursday: request.body.Thursday,
         Friday: request.body.Friday,
         Saturday: request.body.Saturday,
-        Sunday: request.body.Sunday       
+        Sunday: request.body.Sunday,
+        TotalHours: request.body.TotalHours   
     });
     // console.log("Rosters Routes Request: ", request)
     // console.log("Rosters Routes Response: ", response)
@@ -84,6 +87,7 @@ routes.get('/match/:user_id', async (request, response) => {
     
     // Find index position of matching Firebase UID against MongoDB user
     const index = postsResult.allEmployees.map(e => e.employeeID).indexOf(request.params.user_id)
+    
     console.log(postsResult.allEmployees[index])
     const result = postsResult.allEmployees[index]
 

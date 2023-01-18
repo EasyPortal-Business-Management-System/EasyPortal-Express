@@ -10,7 +10,8 @@ const PostSchema = new mongoose.Schema({
     Thursday: String,
     Friday: String,
     Saturday: String,
-    Sunday: String
+    Sunday: String,
+    TotalHours: String
 
 });
 
