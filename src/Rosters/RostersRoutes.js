@@ -33,6 +33,7 @@ routes.post('/', async (request, response) => {
     let creationResult = await createSpecificEmployee({
         displayName: request.body.displayName,
         employeeID: request.body.uid,
+        WeekPeriod: request.body.WeekPeriod,
         Monday: request.body.Monday,
         Tuesday: request.body.Tuesday,
         Wednesday: request.body.Wednesday,
@@ -40,7 +41,8 @@ routes.post('/', async (request, response) => {
         Friday: request.body.Friday,
         Saturday: request.body.Saturday,
         Sunday: request.body.Sunday,
-        TotalHours: request.TotalHours
+        TotalHours: request.TotalHours,
+        TotalBreak: request.TotalBreak
 
     })
     response.json(creationResult);
@@ -62,6 +64,7 @@ routes.put('/:id', async (request, response) => {
         // displayName: request.body.displayName,
         
         // employeeID: request.body.employeeID,
+        WeekPeriod: request.body.WeekPeriod,
         Monday: request.body.Monday,
         Tuesday: request.body.Tuesday,
         Wednesday: request.body.Wednesday,
@@ -69,7 +72,8 @@ routes.put('/:id', async (request, response) => {
         Friday: request.body.Friday,
         Saturday: request.body.Saturday,
         Sunday: request.body.Sunday,
-        TotalHours: request.body.TotalHours   
+        TotalHours: request.body.TotalHours,
+        TotalBreak: request.body.TotalBreak
     });
     // console.log("Rosters Routes Request: ", request)
     // console.log("Rosters Routes Response: ", response)

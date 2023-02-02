@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const PostSchema = new mongoose.Schema({
     name: String,
     employeeID: String,
+    WeekPeriod: String,
     Monday: String,
     Tuesday: String,
     Wednesday: String,
@@ -11,7 +12,8 @@ const PostSchema = new mongoose.Schema({
     Friday: String,
     Saturday: String,
     Sunday: String,
-    TotalHours: String
+    TotalHours: String,
+    TotalBreak: String
 
 });
 

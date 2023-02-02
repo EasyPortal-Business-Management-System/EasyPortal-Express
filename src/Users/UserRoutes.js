@@ -43,6 +43,7 @@ routes.post('/sign-up', async (request, response) => {
         {
             displayName: signInResult.displayName, 
             employeeID: signInResult.uid, 
+            WeekPeriod: '',
             Monday: '',
             Tuesday: '',
             Wednesday: '',
@@ -50,7 +51,8 @@ routes.post('/sign-up', async (request, response) => {
             Friday: '',
             Saturday: '',
             Sunday: '',
-            TotalHours: ''
+            TotalHours: '',
+            TotalBreak: ''
     })
 
     if (mongoDBuser.error != null){

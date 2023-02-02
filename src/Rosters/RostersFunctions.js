@@ -20,6 +20,7 @@ async function createSpecificEmployee(postDetails){
     let newPost = new Post({
         name: postDetails.displayName,
         employeeID: postDetails.employeeID,
+        WeekPeriod: postDetails.WeekPeriod,
         Monday: postDetails.Monday,
         Tuesday: postDetails.Tuesday,
         Wednesday: postDetails.Wednesday,
@@ -27,7 +28,8 @@ async function createSpecificEmployee(postDetails){
         Friday: postDetails.Friday,
         Saturday: postDetails.Saturday,
         Sunday: postDetails.Sunday,
-        TotalHours: postDetails.TotalHours
+        TotalHours: postDetails.TotalHours,
+        TotalBreak: postDetails.TotalBreak
     })
     // extra logic can be added here on the newPost before saving. ie. validation.
     // and then save
@@ -42,6 +44,7 @@ async function updateSpecificEmployee(postDetails){
         let updateResult = await Post.findByIdAndUpdate(
             {_id: postDetails.id},
             {
+                WeekPeriod: postDetails.WeekPeriod,
                 Monday: postDetails.Monday,
                 Tuesday: postDetails.Tuesday,
                 Wednesday: postDetails.Wednesday,
@@ -49,7 +52,8 @@ async function updateSpecificEmployee(postDetails){
                 Friday: postDetails.Friday,
                 Saturday: postDetails.Saturday,
                 Sunday: postDetails.Sunday,
-                TotalHours: postDetails.TotalHours
+                TotalHours: postDetails.TotalHours,
+                TotalBreak: postDetails.TotalBreak
             },
             { 
                 upsert: true, // upsert means it'll create document if it doesn't exist
